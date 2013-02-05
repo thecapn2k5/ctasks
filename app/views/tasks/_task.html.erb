@@ -1,0 +1,18 @@
+<% unless task %>
+<% task = Task.new() %>
+<% end %>
+<% unless task.parent_id != 0 && first_level == true %>
+<li id="task<%= task.id %>">
+<span class="taskname"><%= task.name %></span>
+<button type="button" id="addnewtask<%= task.id %>" class="addnewtask">Add</button>
+<button type="button" id="togglehidetask<%= task.id %>" class="togglehidetask">Hide</button>
+<button type="button" id="togglehidetask<%= task.id %>" class="togglehidetask hideme">Un-Hide</button>
+<button type="button" id="destroytask<%= task.id %>" class="destroytask">Del</button>
+
+<ul class="tasks" id="tasks<%= task.id %>">
+   <% if task.tasks.any? %>
+   <%= render task.tasks, :first_level => false %>
+   <% end %>
+</ul>
+</li>
+<% end %>
