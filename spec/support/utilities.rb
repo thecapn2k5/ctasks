@@ -1,5 +1,5 @@
 def full_title(page_title)
-   base_title = "RoR Tutorial Sample App"
+   base_title = "cTasks"
    if page_title.empty?
       base_title
    else

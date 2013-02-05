@@ -8,16 +8,10 @@ namespace :db do
          password_confirmation: "password"
       )
       admin.toggle!(:admin)
-      user = User.create!(
-         name:     "Example User",
-         email:    "example@railstutorial.org",
-         password: "foobar",
-         password_confirmation: "foobar"
-      )
       user.toggle!(:admin)
       99.times do |n|
          name  = Faker::Name.name
-         email = "example-#{n+1}@railstutorial.org"
+         email = "example-#{n+1}@thechrismorgan.com"
          password  = "password"
          User.create!(
             name:     name,
