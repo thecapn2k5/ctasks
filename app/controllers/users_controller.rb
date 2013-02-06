@@ -8,9 +8,7 @@ class UsersController < ApplicationController
    end
 
    def show
-      @user = User.find(params[:id])
-      # get the to-do lists
-      #@microposts = @user.microposts.paginate(page: params[:page])
+      redirect_to root_path
    end
 
    def new
@@ -21,7 +19,7 @@ class UsersController < ApplicationController
       @user = User.new(params[:user])
       if @user.save
          sign_in @user
-         flash[:success] = "Welcome to the Sample App!"
+         flash[:success] = "Welcome to cTasks!"
          redirect_to @user
       else
          render "new"

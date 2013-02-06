@@ -1,18 +1,17 @@
 class StaticPagesController < ApplicationController
-  def home
-    if signed_in?
-      # get the to-do-lists
-      #@micropost  = current_user.microposts.build
-      #@feed_items = current_user.feed.paginate(page: params[:page])
-    end
-  end
+   def home
+      if signed_in?
+         @user = current_user
+      end
+   end
 
-  def help
-  end
+   def help
+   end
 
-  def about
-  end
+   def about
+   end
 
-  def contact
-  end
+   def contact
+   end
+
 end

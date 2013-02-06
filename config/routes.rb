@@ -1,6 +1,7 @@
 Ctasks::Application.routes.draw do
    resources :users
    resources :sessions, only: [:new, :create, :destroy]
+   resources :tasks
 
    root to: 'static_pages#home'
 
@@ -12,19 +13,25 @@ Ctasks::Application.routes.draw do
    match '/about',    to: 'static_pages#about'
    match '/contact',  to: 'static_pages#contact'
 
-  # Sample of regular route:
-  #   match 'products/:id' => 'catalog#view'
+   match '/toggle_hide_task', to: 'tasks#toggle_hide_task'
+   match '/save_task_sort', to: 'tasks#save_task_sort'
+   match '/change_task_name', to: 'tasks#change_task_name'
+   match '/add_task', to: 'tasks#add_task'
+   match '/destroy_task', to: 'tasks#destroy_task'
 
-  # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
-  # This route can be invoked with purchase_url(:id => product.id)
+   # Sample of regular route:
+   #   match 'products/:id' => 'catalog#view'
 
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
+   # Sample of named route:
+   #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
+   # This route can be invoked with purchase_url(:id => product.id)
 
-  # You can have the root of your site routed with "root"
-  # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
+   # Sample resource route (maps HTTP verbs to controller actions automatically):
+   #   resources :products
 
-  # See how all your routes lay out with "rake routes"
+   # You can have the root of your site routed with "root"
+   # just remember to delete public/index.html.
+   # root :to => 'welcome#index'
+
+   # See how all your routes lay out with "rake routes"
 end

@@ -4,9 +4,9 @@
 $grayMediumLight: #eaeaea;
 
 @mixin box_sizing {
-   -moz-box-sizing: border-box;
    -webkit-box-sizing: border-box;
-   box-sizing: border-box;
+      -moz-box-sizing: border-box;
+           box-sizing: border-box;
 }
 
 /* miscellaneous */
@@ -74,7 +74,6 @@ p {
    margin-right: 10px;
    font-size: 1.7em;
    color: white;
-   text-transform: uppercase;
    letter-spacing: -1px;
    padding-top: 9px;
    font-weight: bold;
@@ -186,4 +185,51 @@ input {
          border-bottom: 1px solid $grayLighter;
       }
    }
+}
+
+.hideme {
+   display: none;
+}
+
+.hiddentask {
+   color: $grayLight;
+   button {
+      color: $grayLight;
+   }
+}
+
+li#task {
+   display: none;
+}
+
+li.task {
+   list-style: none;
+   border: 1px solid $grayLight;
+   margin-top: 5px;
+   padding: 5px;
+   .taskname {
+      margin: 2px;
+      padding: 0px;
+      border: none;
+      width: 550px;
+   }
+   .taskfunctions {
+      display: inline;
+      float: right;
+      position: relative;
+      bottom: 2px;
+   }
+   .handle {
+      cursor: move;
+   }
+   @include border-radius( 5px );
+}
+
+ul.tasks {
+   margin-left: 10px;
+   margin-right: 0px;
+}
+
+#tasks0 {
+   margin-left: 0px;
 }

@@ -2,12 +2,25 @@
 <% task = Task.new() %>
 <% end %>
 <% unless task.parent_id != 0 && first_level == true %>
-<li id="task<%= task.id %>">
-<span class="taskname"><%= task.name %></span>
-<button type="button" id="addnewtask<%= task.id %>" class="addnewtask">Add</button>
-<button type="button" id="togglehidetask<%= task.id %>" class="togglehidetask">Hide</button>
-<button type="button" id="togglehidetask<%= task.id %>" class="togglehidetask hideme">Un-Hide</button>
-<button type="button" id="destroytask<%= task.id %>" class="destroytask">Del</button>
+<li id="task<%= task.id %>" class="task <% if task.hidden %>hiddentask hideme<% end %>">
+<input class="taskname" id="taskname<%= task.id %>" value="<%= task.name %>">
+
+<div class="taskfunctions" id="taskfunctions<%= task.id %>">
+   <button type="button" id="addnewtask<%= task.id %>" class="addnewtask">
+      <%= image_tag("list_add_small.png", alt:"Add New Task") %>
+   </button>
+   <button type="button" id="togglehidetask<%= task.id %>" class="togglehidetask <% if task.hidden %>hideme<%end%>">
+      <%= image_tag("eye_close_small.png", alt:"Hide Task") %>
+   </button>
+   <button type="button" id="togglehidetask<%= task.id %>" class="togglehidetask <% unless task.hidden %>hideme<%end%>">
+      <%= image_tag("eye_small.png", alt:"Un-Hide Task") %>
+   </button>
+   <button type="button" id="destroytask<%= task.id %>" class="destroytask">
+      <%= image_tag("list_delete_small.png", alt:"Delete Task") %>
+   </button>
+
+   <%= image_tag("sortable.png", alt:"Sort Task", class:"handle") %>
+</div>
 
 <ul class="tasks" id="tasks<%= task.id %>">
    <% if task.tasks.any? %>

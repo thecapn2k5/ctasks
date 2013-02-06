@@ -11,7 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130205055254) do
+ActiveRecord::Schema.define(:version => 20130205092041) do
+
+  create_table "tasks", :force => true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.integer  "parent_id"
+    t.integer  "sort_order"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "hidden",     :default => false
+  end
+
+  add_index "tasks", ["user_id", "parent_id", "sort_order"], :name => "index_tasks_on_user_id_and_parent_id_and_order"
 
   create_table "users", :force => true do |t|
     t.string   "name"

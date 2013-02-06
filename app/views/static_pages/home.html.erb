@@ -1,31 +1,48 @@
 <% if signed_in? %>
 
-   <div class="row">
-      <aside class="span4">
-         <section>
-            <a href="<%= user_path(current_user) %>">
-               <%= gravatar_for current_user, size: 52 %>
-            </a>
-            <h1><%= current_user.name %></h1>
-            <span><%= link_to "view my profile", current_user %></span>
-            <%= render 'shared/user_info' %>
-         </section>
-      </aside>
-      <div class="span8">
-         <h3>Main Section</h3>
-      </div>
+<%= provide(:title, @user.name) %>
+<div class="row">
+   <aside class="span2">
+   <section>
+   <h1>
+      <%= @user.name %>
+      <br>
+      <%= gravatar_for @user %>
+   </h1>
+   </section>
+   </aside>
+
+   <div class="span10">
+      <h3>
+         Tasks (<%= @user.tasks.count %>)
+         <button type="button" onClick="AddNew(0)">
+            <%= image_tag("list_add_big.png", alt:"Add New Task") %>
+         </button>
+         <button type="button" id="showhidden" class="togglehidden" onClick="ShowHidden()">
+            <%= image_tag("eye_big.png", alt:"Show Hidden Tasks") %>
+         </button>
+         <button type="button" id="hidehidden" class="togglehidden hideme" onClick="HideHidden()">
+            <%= image_tag("eye_close_big.png", alt:"Don't Show Hidden Tasks") %>
+         </button>
+      </h3>
+
+      <ul class="tasks" id="tasks0">
+         <% if @user.tasks.any? %>
+         <%= render @user.tasks, :first_level => true %>
+         <% end %>
+         <%= render '/tasks/task', :first_level => false %>
+      </ul>
    </div>
+</div>
 
 <% else %>
 
    <div class="center hero-unit">
-      <h1>Welcome to the Sample App</h1>
+      <h1>Welcome to cTasks</h1>
 
-      <h2>This is the home page for the <a href="http://railstutorial.org/">Ruby on Rails Tutorial</a> sample application.</h2>
+      <h2>The last To-Do List you'll ever need.</h2>
 
       <%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
    </div>
-
-   <%= link_to image_tag("rails.png", alt: "Rails"), 'http://rubyonrails.org/' %>
 
 <% end %>
