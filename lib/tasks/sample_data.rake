@@ -8,7 +8,7 @@ namespace :db do
          password_confirmation: "password"
       )
       admin.toggle!(:admin)
-      99.times do |n|
+      3.times do |n|
          name  = Faker::Name.name
          email = "example-#{n+1}@thechrismorgan.com"
          password  = "password"
@@ -20,7 +20,7 @@ namespace :db do
          )
       end
 
-      users = User.all(limit: 6)
+      users = User.all
       5.times do
          name = Faker::Lorem.sentence(5)
          users.each { |user| user.tasks.create!(name:name, parent_id:0, sort_order:0) }

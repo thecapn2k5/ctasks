@@ -15,7 +15,7 @@
    <div class="span10">
       <h3>
          Tasks (<%= @user.tasks.count %>)
-         <button type="button" onClick="AddNew(0)">
+         <button type="button" id="addnewtask0" class="addnewtask">
             <%= image_tag("list_add_big.png", alt:"Add New Task") %>
          </button>
          <button type="button" id="showhidden" class="togglehidden" onClick="ShowHidden()">
