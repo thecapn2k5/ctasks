@@ -36,6 +36,8 @@ Initialize = ->
       container = ui.item.parent()
       SaveSort container
 
+  $(".togglehidetasks.blank").unbind "click"
+
 SaveSort = (container) ->
   tasks = ""
   container.children("li").each (i) ->
@@ -49,26 +51,44 @@ SaveSort = (container) ->
 AddNew = (parent_id) ->
   name = prompt("Name for new task:")
   name = name.trim()  if name
-  if name
+
+  if name and name.length > 75
+    alert "Task names cannot be more than 75 characters long. Yours was "+String(name.length)+" characters."
+  else if name
     $.getJSON "/add_task",
       name: name
       parent_id: parent_id
     , (data) ->
       task_id = data["id"]
-      $("li#task .taskname").val name
-      $("li#task input.taskname").attr "id", "taskname" + task_id
-      $("li#task button.addnewtask").attr "id", "addnewtask" + task_id
-      $("li#task button.destroytask").attr "id", "destroytask" + task_id
-      $("li#task ul").attr "id", "tasks" + task_id
-      cloned = $("li#task").clone()
-      $("#tasks"+parent_id).append cloned
-      $("#tasks"+parent_id+" li:last").attr "id", "task" + task_id
-      $("#tasks"+parent_id+" li:last").css "display", "list-item"
-      $("#tasks"+parent_id+" li:last").css "display", "list-item"
-      $("#tasks"+parent_id+" #togglehidetasks").attr "id", "togglehidetasks" + task_id
-      $("#togglehidetasks"+parent_id).addClass "togglehidetasks"
-      $("#togglehidetasks"+parent_id+ " img").attr("src", "/assets/accordion_opened.png")
 
+      # fill in the input
+      cloned = $("li#task").clone()
+      cloned.attr "id", "task" + task_id
+      $("#tasks"+parent_id).append cloned
+
+      # set the li id to the selector
+      selector = "#task"+task_id
+
+      # the name
+      $(selector+" .taskname").val name
+
+      # ids for various elements
+      $(selector+" .taskname").attr "id", "taskname"                 + task_id
+      $(selector+" .addnewtask").attr "id", "addnewtask"             + task_id
+      $(selector+" .promptdelete").attr "id", "promptdelete"         + task_id
+      $(selector+" .confirmdelete").attr "id", "confirmdelete"       + task_id
+      $(selector+" #togglehidetasks").attr "id", "togglehidetasks"   + task_id
+      $(selector+" ul").attr "id", "tasks"                           + task_id
+
+      # make sure the parent has the collapse enabled
+      alert "#togglehidetasks"+parent_id
+      $("#togglehidetasks"+parent_id).addClass "togglehidetasks"
+      $("#togglehidetasks"+parent_id+" img").attr("src", "/assets/accordion_opened.png")
+
+      # show the new one
+      $(selector).css "display", "list-item"
+
+      # increment the tasks count
       $("#taskscount").text parseInt($("#taskscount").text()) + 1
 
       Initialize()

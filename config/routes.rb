@@ -9,9 +9,7 @@ Ctasks::Application.routes.draw do
    match '/signin',   to: 'sessions#new'
    match '/signout',  to: 'sessions#destroy', via: :delete
 
-   match '/help',     to: 'static_pages#help'
    match '/about',    to: 'static_pages#about'
-   match '/contact',  to: 'static_pages#contact'
 
    match '/toggle_hide_task', to: 'tasks#toggle_hide_task'
    match '/save_task_sort', to: 'tasks#save_task_sort'

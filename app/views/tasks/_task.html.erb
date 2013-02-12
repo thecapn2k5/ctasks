@@ -3,7 +3,7 @@
 <% end %>
 <% unless task.parent_id != 0 && first_level == true %>
 <li id="task<%= task.id %>" class="task accordion">
-<span class="tooltipped <% if task.tasks.any? %>togglehidetasks<% end %>" id="togglehidetasks<%= task.id %>">
+<span class="tooltipped <% if task.tasks.any? && task.id %>togglehidetasks<% end %>" id="togglehidetasks<%= task.id %>">
 <% if task.tasks.any? %>
    <% if task.hidden %>
       <%= image_tag("accordion_closed.png", alt:"Add New Task") %>
