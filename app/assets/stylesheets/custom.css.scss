@@ -211,7 +211,7 @@ li.task {
       margin: 2px;
       padding: 0px;
       border: none;
-      width: 550px;
+      width: 450px;
    }
    .taskfunctions {
       display: inline;
@@ -222,14 +222,63 @@ li.task {
    .handle {
       cursor: move;
    }
+   .tasks {
+      width: 99%;
+      margin-left: 10px;
+      margin-right: 0px;
+   }
    @include border-radius( 5px );
-}
-
-ul.tasks {
-   margin-left: 10px;
-   margin-right: 0px;
 }
 
 #tasks0 {
    margin-left: 0px;
+}
+
+// css tooltips
+.tooltipped span{
+   display: none;
+}
+
+.tooltipped:hover span {
+   position: absolute;
+   margin:15px 0px 0px 20px;
+   background-color: beige;
+   max-width:220;
+   padding: 2px 10px 2px 10px;
+   border: 1px solid #C0C0C0;
+   font: normal 10px/12px verdana;
+   color: #000;
+   text-align:left;
+   display: block;
+}
+
+.accordion {
+   margin-bottom: 0px;
+}
+
+.ui-sortable-helper, .ui-state-highlight {
+   list-style: none;
+}
+
+.deleteprompt {
+   display: none;
+}
+
+.pendingdelete {
+   .deleteprompt { display: block; }
+   background-color: #CD0000;
+   color: white;
+   input, div, span, ul, button, img {
+      display: none;
+   }
+   .confirmdelete, .canceldelete {
+      display: block;
+      float: right;
+      position: relative;
+      bottom: 3px;
+   }
+   .canceldelete {
+      margin-right: 20px;
+   }
+
 }

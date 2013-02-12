@@ -1,19 +1,28 @@
 Initialize = ->
   $(".addnewtask").unbind "click"
-  $(".togglehidetask").unbind "click"
-  $(".destroytask").unbind "click"
+  $(".togglehidetasks").unbind "click"
+  $(".promptdelete").unbind "click"
+  $(".canceldelete").unbind "click"
+  $(".confirmdelete").unbind "click"
   $(".taskname").unbind "change"
   $(".addnewtask").click ->
     task_id = $(this).attr("id").slice(10)
     AddNew task_id
 
-  $(".togglehidetask").click ->
-    task_id = $(this).attr("id").slice(14)
+  $(".togglehidetasks").click ->
+    task_id = $(this).attr("id").slice(15)
     ToggleHide task_id
 
-  $(".destroytask").click ->
-    task_id = $(this).attr("id").slice(11)
-    Destroy task_id
+  $(".promptdelete").click ->
+    task_id = $(this).attr("id").slice(12)
+    PromptDelete task_id
+
+  $(".canceldelete").click ->
+    CancelDelete()
+
+  $(".confirmdelete").click ->
+    task_id = $(this).attr("id").slice(13)
+    ConfirmDelete task_id
 
   $(".taskname").change ->
     task_id = $(this).attr("id").slice(8)
@@ -49,13 +58,19 @@ AddNew = (parent_id) ->
       $("li#task .taskname").val name
       $("li#task input.taskname").attr "id", "taskname" + task_id
       $("li#task button.addnewtask").attr "id", "addnewtask" + task_id
-      $("li#task button.togglehidetask").attr "id", "togglehidetask" + task_id
       $("li#task button.destroytask").attr "id", "destroytask" + task_id
       $("li#task ul").attr "id", "tasks" + task_id
       cloned = $("li#task").clone()
-      $("#tasks" + parent_id).append cloned
-      $("#tasks" + parent_id + " li:last").attr "id", "task" + task_id
-      $("#tasks" + parent_id + " li:last").css "display", "list-item"
+      $("#tasks"+parent_id).append cloned
+      $("#tasks"+parent_id+" li:last").attr "id", "task" + task_id
+      $("#tasks"+parent_id+" li:last").css "display", "list-item"
+      $("#tasks"+parent_id+" li:last").css "display", "list-item"
+      $("#tasks"+parent_id+" #togglehidetasks").attr "id", "togglehidetasks" + task_id
+      $("#togglehidetasks"+parent_id).addClass "togglehidetasks"
+      $("#togglehidetasks"+parent_id+ " img").attr("src", "/assets/accordion_opened.png")
+
+      $("#taskscount").text parseInt($("#taskscount").text()) + 1
+
       Initialize()
       SaveSort $("#tasks" + parent_id)
 
@@ -63,19 +78,32 @@ ToggleHide = (task_id) ->
   $.getJSON "/toggle_hide_task",
     id: task_id
   , (data) ->
-    $("#task" + data + " #taskfunctions" + data + " .togglehidetask").toggleClass "hideme"
-    $("#task" + data).toggleClass "hiddentask"
-    if $("#task" + data).hasClass("hiddentask") and $("#hidehidden").hasClass("hideme")
-      $("#task" + data).addClass "hideme"
+    $("#task" + data + " #tasks" + task_id).collapse "toggle"
+    if $("#togglehidetasks"+task_id+ " img").attr("src") == "/assets/accordion_opened.png"
+      $("#togglehidetasks"+task_id+ " img").attr("src", "/assets/accordion_closed.png")
     else
-      $("#task" + data).removeClass "hideme"
+      $("#togglehidetasks"+task_id+ " img").attr("src", "/assets/accordion_opened.png")
 
-Destroy = (task_id) ->
-  if confirm("Are you sure you want to premanently delete this task and all sub-tasks?")
-    $.getJSON "/destroy_task",
-      id: task_id
-    , (data) ->
-      $("#task" + String(data)).remove()
+
+PromptDelete = (task_id) ->
+  $(".pendingdelete").removeClass "pendingdelete"
+  $("#task"+task_id).addClass "pendingdelete"
+
+CancelDelete = ->
+  $(".pendingdelete").removeClass "pendingdelete"
+
+ConfirmDelete = (task_id) ->
+  $.getJSON "/destroy_task",
+    id: task_id
+  , (data) ->
+    task_id = data["id"]
+    any = data["any"]
+
+    $("#taskscount").text data["taskscount"]
+    $("#task" + task_id).remove()
+    if any == "false"
+      $("#togglehidetasks"+data["parent_id"]+ " img").attr("src", "/assets/accordion_blank.png")
+      $("#togglehidetasks"+data["parent_id"]).removeClass "togglehidetasks"
 
 ChangeName = (task_id) ->
   name = $("#taskname" + task_id).val()
@@ -85,10 +113,3 @@ ChangeName = (task_id) ->
 
 $(document).ready ->
   Initialize()
-  $('#showhidden').click ->
-    $(".hiddentask").removeClass "hideme"
-    $("button.togglehidden").toggleClass "hideme"
-
-  $('#hidehidden').click ->
-    $(".hiddentask").addClass "hideme"
-    $("button.togglehidden").toggleClass "hideme"

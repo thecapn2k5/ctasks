@@ -14,8 +14,15 @@ class TasksController < ApplicationController
 
    def destroy_task
       task = get_task_if_user(params[:id])
+      if task.parent_id == 0
+         parent = current_user
+      else
+         parent = get_task_if_user(task.parent_id)
+      end
       destroy_dependent_tasks(task)
-      render text: task.id, content_type: "application/json"
+
+      task_string = "{\"id\":\"#{task.id}\", \"any\":\"#{parent.tasks.any?}\", \"parent_id\":\"#{task.parent_id}\", \"taskscount\":\"#{current_user.tasks.count}\"}"
+      render text: task_string, content_type: "application/json"
    end
 
    def toggle_hide_task

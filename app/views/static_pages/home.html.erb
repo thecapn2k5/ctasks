@@ -1,5 +1,4 @@
 <% if signed_in? %>
-
 <%= provide(:title, @user.name) %>
 <div class="row">
    <aside class="span2">
@@ -14,15 +13,10 @@
 
    <div class="span10">
       <h3>
-         Tasks (<%= @user.tasks.count %>)
-         <button type="button" id="addnewtask0" class="addnewtask">
+         Tasks (<span id="taskscount"><%= @user.tasks.count %></span>)
+         <button type="button" id="addnewtask0" class="addnewtask tooltipped">
             <%= image_tag("list_add_big.png", alt:"Add New Task") %>
-         </button>
-         <button type="button" id="showhidden" class="togglehidden" onClick="ShowHidden()">
-            <%= image_tag("eye_big.png", alt:"Show Hidden Tasks") %>
-         </button>
-         <button type="button" id="hidehidden" class="togglehidden hideme" onClick="HideHidden()">
-            <%= image_tag("eye_close_big.png", alt:"Don't Show Hidden Tasks") %>
+            <span>Add a task to the main list</span>
          </button>
       </h3>
 

@@ -2,27 +2,39 @@
 <% task = Task.new() %>
 <% end %>
 <% unless task.parent_id != 0 && first_level == true %>
-<li id="task<%= task.id %>" class="task <% if task.hidden %>hiddentask hideme<% end %>">
+<li id="task<%= task.id %>" class="task accordion">
+<span class="tooltipped <% if task.tasks.any? %>togglehidetasks<% end %>" id="togglehidetasks<%= task.id %>">
+<% if task.tasks.any? %>
+   <% if task.hidden %>
+      <%= image_tag("accordion_closed.png", alt:"Add New Task") %>
+   <% else %>
+      <%= image_tag("accordion_opened.png", alt:"Add New Task") %>
+   <% end %>
+<% else %>
+   <%= image_tag("accordion_blank.png", alt:"Add New Task") %>
+<% end %>
+<span>Click to expand/collapse the sub-tasks of this task.</span>
+</span>
 <input class="taskname" id="taskname<%= task.id %>" value="<%= task.name %>">
 
-<div class="taskfunctions" id="taskfunctions<%= task.id %>">
+<span class="taskfunctions" id="taskfunctions<%= task.id %>">
    <button type="button" id="addnewtask<%= task.id %>" class="addnewtask">
-      <%= image_tag("list_add_small.png", alt:"Add New Task") %>
+      <%= image_tag("add_child_file.png", alt:"Add New Task") %>
    </button>
-   <button type="button" id="togglehidetask<%= task.id %>" class="togglehidetask <% if task.hidden %>hideme<%end%>">
-      <%= image_tag("eye_close_small.png", alt:"Hide Task") %>
-   </button>
-   <button type="button" id="togglehidetask<%= task.id %>" class="togglehidetask <% unless task.hidden %>hideme<%end%>">
-      <%= image_tag("eye_small.png", alt:"Un-Hide Task") %>
-   </button>
-   <button type="button" id="destroytask<%= task.id %>" class="destroytask">
+   <button type="button" id="promptdelete<%= task.id %>" class="promptdelete">
       <%= image_tag("list_delete_small.png", alt:"Delete Task") %>
    </button>
 
    <%= image_tag("sortable.png", alt:"Sort Task", class:"handle") %>
+</span>
+
+<div class="deleteprompt">
+   Are you sure you want to delete this task and all child tasks?
+   <button type="button" class="canceldelete">No</button>
+   <button type="button" class="confirmdelete" id="confirmdelete<%= task.id %>">Yes, delete!</button>
 </div>
 
-<ul class="tasks" id="tasks<%= task.id %>">
+<ul class="tasks <% if task.hidden %>collapse<% end %>" id="tasks<%= task.id %>" >
    <% if task.tasks.any? %>
    <%= render task.tasks, :first_level => false %>
    <% end %>
