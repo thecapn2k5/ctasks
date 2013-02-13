@@ -25,6 +25,14 @@
          <%= render @user.tasks, :first_level => true %>
          <% end %>
          <%= render '/tasks/task', :first_level => false %>
+         <li id="clonemeprompt" class="task">
+            <input class="taskname">
+            <div class="taskfunctions">
+               <span class="charactercount">75</span> characters left.
+               <button type="button" class="savenew"><%= image_tag("accept.png", alt:"Save") %></button>
+               <button type="button" class="cancelnew"><%= image_tag("cross.png", alt:"Cancel") %></button>
+            </div>
+         </li>
       </ul>
    </div>
 </div>

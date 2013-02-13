@@ -275,10 +275,24 @@ li.task {
       display: block;
       float: right;
       position: relative;
-      bottom: 3px;
+      bottom: 2px;
+      height: 25px;
+      img {
+         display: block;
+      }
    }
    .canceldelete {
       margin-right: 20px;
    }
+   .confirmdelete {
+      margin-right: 4px;
+   }
+}
 
+#clonemeprompt {
+   display: none;
+}
+
+.clonedprompt, .clonedprompt input {
+   background-color: #FC0;
 }

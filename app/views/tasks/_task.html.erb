@@ -15,7 +15,7 @@
 <% end %>
 <span>Click to expand/collapse the sub-tasks of this task.</span>
 </span>
-<input class="taskname" id="taskname<%= task.id %>" value="<%= task.name %>">
+<input autocomplete="off" class="taskname" id="taskname<%= task.id %>" value="<%= task.name %>">
 
 <span class="taskfunctions" id="taskfunctions<%= task.id %>">
    <button type="button" id="addnewtask<%= task.id %>" class="addnewtask">
@@ -30,8 +30,8 @@
 
 <div class="deleteprompt">
    Are you sure you want to delete this task and all child tasks?
-   <button type="button" class="canceldelete">No</button>
-   <button type="button" class="confirmdelete" id="confirmdelete<%= task.id %>">Yes, delete!</button>
+   <button type="button" class="canceldelete"><%= image_tag("cross.png", alt:"Cancel") %></button>
+   <button type="button" class="confirmdelete" id="confirmdelete<%= task.id %>"><%= image_tag("accept.png", alt:"Save") %></button>
 </div>
 
 <ul class="tasks <% if task.hidden %>collapse<% end %>" id="tasks<%= task.id %>" >
