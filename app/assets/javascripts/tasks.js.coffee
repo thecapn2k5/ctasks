@@ -4,6 +4,7 @@ Initialize = ->
    $(".promptdelete").unbind "click"
    $(".canceldelete").unbind "click"
    $(".confirmdelete").unbind "click"
+   $(".taskname").unbind "keyup"
    $(".taskname").unbind "change"
    $(".addnewtask").click ->
       task_id = $(this).attr("id").slice(10)
@@ -23,6 +24,10 @@ Initialize = ->
    $(".confirmdelete").click ->
       task_id = $(this).attr("id").slice(13)
       ConfirmDelete task_id
+
+   $(".taskname").keyup ->
+      task_id = $(this).attr("id").slice(8)
+      CheckEdit task_id
 
    $(".taskname").change ->
       task_id = $(this).attr("id").slice(8)
@@ -68,7 +73,6 @@ PromptNew = (parent_id) ->
    $(".savenew").click ->
       parent_id = $(this).attr("id").slice(7)
       SaveNew parent_id
-
 
    # catch the keyup so it doesn't over-stretch
    $("#tasks"+parent_id+" .taskname").keyup ->
@@ -159,11 +163,25 @@ ConfirmDelete = (task_id) ->
          $("#togglehidetasks"+data["parent_id"]+ " img").attr("src", "/assets/accordion_blank.png")
          $("#togglehidetasks"+data["parent_id"]).removeClass "togglehidetasks"
 
+
+CheckEdit = (task_id) ->
+   target = "#taskname"+task_id
+   length = $(target).val().length
+   if length > 75
+      text = $(target).val().slice(0,75)
+      $(target).val(text)
+      $("#editlengthwarning").show(300, HideWarning)
+
+HideWarning = ->
+   $("#editlengthwarning").delay(4000).hide(700)
+
+
 ChangeName = (task_id) ->
    name = $("#taskname" + task_id).val()
    $.post "/change_task_name",
       id: task_id
       name: name
+
 
 $(document).ready ->
    Initialize()

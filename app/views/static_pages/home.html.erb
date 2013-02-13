@@ -20,6 +20,10 @@
          </button>
       </h3>
 
+      <div id="editlengthwarning" class="hideme">
+         Task names can only be 75 characters long!
+      </div>
+
       <ul class="tasks" id="tasks0">
          <% if @user.tasks.any? %>
          <%= render @user.tasks, :first_level => true %>

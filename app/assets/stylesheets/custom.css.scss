@@ -296,3 +296,8 @@ li.task {
 .clonedprompt, .clonedprompt input {
    background-color: #FC0;
 }
+#editlengthwarning {
+   background-color: #FC0;
+   text-align: center;
+   @include border-radius( 5px );
+}

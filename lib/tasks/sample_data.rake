@@ -26,8 +26,5 @@ namespace :db do
          users.each { |user| user.tasks.create!(name:name, parent_id:0, sort_order:0) }
       end
 
-      admin.tasks.create!(name:"Child1", parent_id:7, sort_order:2)
-      admin.tasks.create!(name:"Child2", parent_id:7, sort_order:1)
-
    end
 end
